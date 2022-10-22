@@ -8,6 +8,7 @@ import (
 
 const shortduration = 1 * time.Second
 
+// Context is used to provide timeout or cancellation for go routine
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), shortduration)
 	defer cancel()
