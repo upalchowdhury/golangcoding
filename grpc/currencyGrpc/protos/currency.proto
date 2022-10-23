@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+//package github.com/upalchowdhury;
+
+option go_package = "github.com/upalchowdhury/currencyGrpc/protos/currency";
+
+
+service Currency {
+    rpc GetRate(RateRequest) returns (RateResponse);
+}
+
+
+message RateRequest {
+    Currencies Base = 1; // 1 is location of the message field
+    Currencies Destination = 2; // so the number is ordering of the field
+}
+
+message RateResponse {
+    float Rate = 1;
+}
+
+enum Currencies {
+    EUR=0;
+    USD=1;
+    JPY=2;
+    BGN=3;
+    BDT=4;
+}
+
+

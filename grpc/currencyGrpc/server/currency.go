@@ -4,7 +4,7 @@ import (
 	"context"
 
 	hclog "github.com/hashicorp/go-hclog"
-	currency "github.com/upalchowdhury/protos/currency"
+	currency "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc"
 )
 
 type Currency struct {

@@ -5,8 +5,7 @@ import (
 	"os"
 
 	"github.com/hashicorp/go-hclog"
-	"github.com/upalchowdhury/protos/currency"
-	"github.com/upalchowdhury/server"
+	currency "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

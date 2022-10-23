@@ -1,4 +1,4 @@
-module github.com/upalchowdhury
+module github.com/upalchowdhury/golangcoding/grpc/currencyGrpc
 
 go 1.18
 
