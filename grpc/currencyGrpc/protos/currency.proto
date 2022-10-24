@@ -2,11 +2,12 @@ syntax = "proto3";
 
 //package github.com/upalchowdhury;
 
-option go_package = "github.com/upalchowdhury/currencyGrpc/protos/currency";
+option go_package = "./currency";
 
 
 service Currency {
     rpc GetRate(RateRequest) returns (RateResponse);
+    rpc SubscribeRates(stream RateRequest) returns (stream RateResponse);
 }
 
 

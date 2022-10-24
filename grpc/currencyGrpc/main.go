@@ -6,6 +6,7 @@ import (
 
 	"github.com/hashicorp/go-hclog"
 	currency "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server"
+	"github.com/upalchowdhury/prolog/golangcoding/grpc/productRest/data"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -13,9 +14,16 @@ import (
 func main() {
 	log := hclog.Default()
 
+	rates, err := data.NewRates(log)
+
+	if err != nil {
+		log.Error("Unable to listen", "error", err)
+		os.Exit(1)
+	}
+
 	gs := grpc.NewServer()
 
-	cs := server.NewCurrency(log)
+	cs := currency.NewCurrency(rates, log)
 
 	currency.RegisterCurrencyServer(gs, cs)
 
