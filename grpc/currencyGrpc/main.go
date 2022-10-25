@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/go-hclog"
 	currency "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server"
-	"github.com/upalchowdhury/prolog/golangcoding/grpc/productRest/data"
+	data "github.com/upalchowdhury/golangcoding/grpc/productRest/data"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

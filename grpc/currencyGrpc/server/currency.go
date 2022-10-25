@@ -6,7 +6,7 @@ import (
 
 	hclog "github.com/hashicorp/go-hclog"
 	protos "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/protos/currency"
-	data "github.com/upalchowdhury/prolog/golangcoding/grpc/productRest/data"
+	data "github.com/upalchowdhury/golangcoding/grpc/productRest/data"
 )
 
 type Currency struct {

@@ -34,6 +34,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
+	github.com/upalchowdhury/prolog/golangcoding/grpc/productRest/data v0.0.0-00010101000000-000000000000 // indirect
 	go.mongodb.org/mongo-driver v1.8.3 // indirect
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
 	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6 // indirect
@@ -42,3 +43,7 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
+
+replace github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server => ../currencyGrpc/server
+
+replace github.com/upalchowdhury/prolog/golangcoding/grpc/productRest/data => ./
