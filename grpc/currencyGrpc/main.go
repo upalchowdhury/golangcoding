@@ -5,8 +5,10 @@ import (
 	"os"
 
 	"github.com/hashicorp/go-hclog"
-	currency "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server"
-	data "github.com/upalchowdhury/golangcoding/grpc/productRest/data"
+	data "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/data"
+	protos "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/protos/currency"
+	server "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server"
+
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -23,9 +25,9 @@ func main() {
 
 	gs := grpc.NewServer()
 
-	cs := currency.NewCurrency(rates, log)
+	cs := server.NewCurrency(rates, log)
 
-	currency.RegisterCurrencyServer(gs, cs)
+	protos.RegisterCurrencyServer(gs, cs)
 
 	reflection.Register(gs) // dont use in production
 

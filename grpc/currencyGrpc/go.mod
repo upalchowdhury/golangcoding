@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/hashicorp/go-hclog v1.3.1
-	github.com/upalchowdhury/golangcoding v0.0.0-20221024122631-a0a2bb174486
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
 )
