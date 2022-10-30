@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/go-hclog"
-	protos "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/server"
+	hclog "github.com/hashicorp/go-hclog"
+	protos "github.com/upalchowdhury/golangcoding/grpc/currencyGrpc/protos/currency"
 )
 
 // ErrProductNotFound is an error raised when a product can not be found in the database
@@ -36,7 +36,7 @@ type Product struct {
 	//
 	// required: true
 	// min: 0.01
-	Price float64 `json:"price" validate:"required,gt=0"`
+	Price float32 `json:"price" validate:"required,gt=0"`
 
 	// the SKU for the product
 	//
@@ -51,10 +51,37 @@ type Products []*Product
 type ProductsDB struct {
 	currency protos.CurrencyClient
 	log      hclog.Logger
+	rates    map[string]float32
+	client   protos.Currency_SubscribeRatesClient
 }
 
 func NewProductsDB(c protos.CurrencyClient, l hclog.Logger) *ProductsDB {
-	return &ProductsDB{c, l}
+	pb := &ProductsDB{c, l, make(map[string]float32), nil}
+
+	go pb.handleUpdates()
+
+	return pb
+}
+
+func (p *ProductsDB) handleUpdates() {
+	sub, err := p.currency.SubscribeRates(context.Background())
+	if err != nil {
+		p.log.Error("Unable to subscribe for rates", "error", err)
+	}
+
+	p.client = sub
+
+	for {
+		rr, err := sub.Recv()
+		p.log.Info("Recieved updated rate from server", "dest", rr.GetDestination().String())
+
+		if err != nil {
+			p.log.Error("Error receiving message", "error", err)
+			return
+		}
+
+		p.rates[rr.Destination.String()] = rr.Rate
+	}
 }
 
 // GetProducts returns all products from the database
@@ -152,13 +179,24 @@ func findIndexByProductID(id int) int {
 	return -1
 }
 
-func (p *ProductsDB) getRate(destination string) (float64, error) {
+func (p *ProductsDB) getRate(destination string) (float32, error) {
+	// if cached return
+	if r, ok := p.rates[destination]; ok {
+		return r, nil
+	}
+
 	rr := &protos.RateRequest{
-		Base:        protos.Currencies(protos.Currencies_value["EUR"]),
+		Base:        protos.Currencies(protos.Currencies_value["USD"]),
 		Destination: protos.Currencies(protos.Currencies_value[destination]),
 	}
 
+	// get initial rate
 	resp, err := p.currency.GetRate(context.Background(), rr)
+	p.rates[destination] = resp.Rate // update cache
+
+	// subscribe for updates
+	p.client.Send(rr)
+
 	return resp.Rate, err
 }
 

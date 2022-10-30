@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/hashicorp/go-hclog"
+	hclog "github.com/hashicorp/go-hclog"
 
 	//"github.com/upalchowdhury/golangcoding/grpc/"
 	data "github.com/upalchowdhury/golangcoding/grpc/productRest/data"
@@ -17,13 +17,13 @@ type KeyProduct struct{}
 
 // Products handler for getting and updating products
 type Products struct {
-	l         *hclog.Logger
+	l         hclog.Logger
 	v         *data.Validation
 	productDB *data.ProductsDB // changed from currency client because its now handled in productDB
 }
 
 // NewProducts returns a new products handler with the given logger
-func NewProducts(l *hclog.Logger, v *data.Validation, pdb *data.ProductsDB) *Products {
+func NewProducts(l hclog.Logger, v *data.Validation, pdb *data.ProductsDB) *Products {
 	return &Products{l, v, pdb}
 }
 

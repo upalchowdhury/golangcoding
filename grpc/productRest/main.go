@@ -15,7 +15,7 @@ import (
 	gohandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 
-	//"github.com/upalchowdhury/golangcoding/grpc/env"
+	env "github.com/upalchowdhury/golangcoding/grpc/envs"
 	"github.com/upalchowdhury/golangcoding/grpc/productRest/data"
 	"github.com/upalchowdhury/golangcoding/grpc/productRest/handlers"
 
